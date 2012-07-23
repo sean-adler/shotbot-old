@@ -12,21 +12,21 @@ uno = Arduino('/dev/tty.usbmodem621')
 
 # Declare all output pins
 
-uno.output([1,2,3,4,5,6,7,8])
+uno.output([0,1,2,3,4,5,6,7])
 
 """
 PIN ASSOCIATIONS
 
 Purely for documentation (these vars are never used)
 
-whiskey = 1
-tequila = 2
-vodka = 3
-gin = 4
-orange_juice = 5
-pineapple_juice = 6
-cranberry_juice = 7
-sour_mix = 8
+whiskey = 0
+tequila = 1
+vodka = 2
+gin = 3
+orange_juice = 4
+pineapple_juice = 5
+cranberry_juice = 6
+sour_mix = 7
 """
 
 ################################
@@ -56,12 +56,10 @@ def conc_helper(L):
     # Recurse until all ingredients are completely poured
     if any([e for e in L if e > 0]):
         for e in range(len(L)):
-            if L[e] > 0 and uno.getState(e+1) == 'LOW':
-                # Arduino pins are not zero-offset,
-                # Add 1 to the list index to access correct pin
-                uno.setHigh(e+1)
-                print "Starting pin %d" % (e+1)
-        # Leave pins on until at least one ingredient is completely poured
+            if L[e] > 0 and uno.getState(e) == 'LOW':
+                uno.setHigh(e)
+                print "Starting pin %d" % (e)
+        # Leave pins high until at least one ingredient is completely poured
         sleep_time = min([e for e in L if e > 0])
         time.sleep(sleep_time)
         # Subtract time elapsed from all ingredients
@@ -69,8 +67,8 @@ def conc_helper(L):
         # Turn off pins whose ingredients are completely poured
         for e in range(len(newL)):
             if newL[e] == 0:
-                uno.setLow(e+1)
-                print "Stopping pin %d" % (e+1)
+                uno.setLow(e)
+                print "Stopping pin %d" % (e)
         # Recurse on adjusted list
         conc_helper(newL)
     else:
