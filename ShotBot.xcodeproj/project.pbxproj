@@ -1,0 +1,291 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7296480D15B947860076851A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7296480C15B947860076851A /* UIKit.framework */; };
+		7296480F15B947860076851A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7296480E15B947860076851A /* Foundation.framework */; };
+		7296481115B947860076851A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7296481015B947860076851A /* CoreGraphics.framework */; };
+		7296481715B947860076851A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7296481515B947860076851A /* InfoPlist.strings */; };
+		7296481915B947860076851A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7296481815B947860076851A /* main.m */; };
+		7296481D15B947860076851A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7296481C15B947860076851A /* AppDelegate.m */; };
+		7296482015B947860076851A /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7296481E15B947860076851A /* MainStoryboard.storyboard */; };
+		7296482315B947860076851A /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7296482215B947860076851A /* MasterViewController.m */; };
+		7296482615B947860076851A /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7296482515B947860076851A /* DetailViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		7296480815B947860076851A /* ShotBot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShotBot.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7296480C15B947860076851A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		7296480E15B947860076851A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		7296481015B947860076851A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		7296481415B947860076851A /* ShotBot-Info.plist */ = {isa = PBXFileReference; path = "ShotBot-Info.plist"; sourceTree = "<group>"; };
+		7296481615B947860076851A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7296481815B947860076851A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		7296481A15B947860076851A /* ShotBot-Prefix.pch */ = {isa = PBXFileReference; path = "ShotBot-Prefix.pch"; sourceTree = "<group>"; };
+		7296481B15B947860076851A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		7296481C15B947860076851A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		7296481F15B947860076851A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		7296482115B947860076851A /* MasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
+		7296482215B947860076851A /* MasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
+		7296482415B947860076851A /* DetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		7296482515B947860076851A /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7296480515B947860076851A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7296480D15B947860076851A /* UIKit.framework in Frameworks */,
+				7296480F15B947860076851A /* Foundation.framework in Frameworks */,
+				7296481115B947860076851A /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		729647FD15B947860076851A = {
+			isa = PBXGroup;
+			children = (
+				7296481215B947860076851A /* shotbot */,
+				7296480B15B947860076851A /* Frameworks */,
+				7296480915B947860076851A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7296480915B947860076851A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7296480815B947860076851A /* ShotBot.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7296480B15B947860076851A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7296480C15B947860076851A /* UIKit.framework */,
+				7296480E15B947860076851A /* Foundation.framework */,
+				7296481015B947860076851A /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7296481215B947860076851A /* shotbot */ = {
+			isa = PBXGroup;
+			children = (
+				7296481B15B947860076851A /* AppDelegate.h */,
+				7296481C15B947860076851A /* AppDelegate.m */,
+				7296481E15B947860076851A /* MainStoryboard.storyboard */,
+				7296482115B947860076851A /* MasterViewController.h */,
+				7296482215B947860076851A /* MasterViewController.m */,
+				7296482415B947860076851A /* DetailViewController.h */,
+				7296482515B947860076851A /* DetailViewController.m */,
+				7296481315B947860076851A /* Supporting Files */,
+			);
+			name = shotbot;
+			path = shotbot;
+			sourceTree = "<group>";
+		};
+		7296481315B947860076851A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				7296481415B947860076851A /* ShotBot-Info.plist */,
+				7296481515B947860076851A /* InfoPlist.strings */,
+				7296481815B947860076851A /* main.m */,
+				7296481A15B947860076851A /* ShotBot-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7296480715B947860076851A /* ShotBot */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7296482915B947860076851A /* Build configuration list for PBXNativeTarget "ShotBot" */;
+			buildPhases = (
+				7296480415B947860076851A /* Sources */,
+				7296480515B947860076851A /* Frameworks */,
+				7296480615B947860076851A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ShotBot;
+			productName = shotbot;
+			productReference = 7296480815B947860076851A /* ShotBot.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		729647FF15B947860076851A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
+			buildConfigurationList = 7296480215B947860076851A /* Build configuration list for PBXProject "ShotBot" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 729647FD15B947860076851A;
+			productRefGroup = 7296480915B947860076851A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7296480715B947860076851A /* ShotBot */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7296480615B947860076851A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7296481715B947860076851A /* InfoPlist.strings in Resources */,
+				7296482015B947860076851A /* MainStoryboard.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7296480415B947860076851A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7296481915B947860076851A /* main.m in Sources */,
+				7296481D15B947860076851A /* AppDelegate.m in Sources */,
+				7296482315B947860076851A /* MasterViewController.m in Sources */,
+				7296482615B947860076851A /* DetailViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		7296481515B947860076851A /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7296481615B947860076851A /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		7296481E15B947860076851A /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7296481F15B947860076851A /* en */,
+			);
+			name = MainStoryboard.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7296482715B947860076851A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		7296482815B947860076851A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		7296482A15B947860076851A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "shotbot/ShotBot-Prefix.pch";
+				INFOPLIST_FILE = "shotbot/ShotBot-Info.plist";
+				PRODUCT_NAME = ShotBot;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		7296482B15B947860076851A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "shotbot/ShotBot-Prefix.pch";
+				INFOPLIST_FILE = "shotbot/ShotBot-Info.plist";
+				PRODUCT_NAME = ShotBot;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7296480215B947860076851A /* Build configuration list for PBXProject "ShotBot" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7296482715B947860076851A /* Debug */,
+				7296482815B947860076851A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7296482915B947860076851A /* Build configuration list for PBXNativeTarget "ShotBot" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7296482A15B947860076851A /* Debug */,
+				7296482B15B947860076851A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 729647FF15B947860076851A /* Project object */;
+}
