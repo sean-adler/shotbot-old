@@ -35,25 +35,28 @@ app = Flask(__name__)
 # Declare the server's only route
 @app.route('/<ingredients>')
 
-def pour_drink(ingredients):
-    """
-    Takes argument 'ingredients' which is always an 8-digit string of ints.
-    Each number in the string corresponds to how long a particular
-    ingredient is poured (or equivalently, how long its corresponding
-    pin is HIGH).
-    """
-    # Iterate over URL string (each ingredient)
-    for pin in range(len(ingredients)):
-        if ingredients[pin] != "0":
-            # Determine pour time
-            pour_time = float(ingredients[pin])
-            print "Turning on pin %d" % (pin+1)
-            # Leave pin high for appropriate time
-            time.sleep(pour_time)
-            print "Turning off pin %d" % (pin+1)
-    # Print ingredients to browser window
-    return ingredients
+def pour(ingredients):
+    drinkList = list([int(e) for e in ingredients])
+    conc_helper(drinkList)
+    return ""
 
+# Helper function: Allows concurrent pouring
+# Open all required valves at once and close when necessary
+def conc_helper(L):
+    if any([e for e in L if e > 0]):
+        for e in range(len(L)):
+            if L[e] > 0:
+                # if uno.getState(e+1) != 'HIGH":
+                print "Starting pin %d" % (e+1)
+        sleep_time = min([e for e in L if e > 0])
+        time.sleep(sleep_time)
+        newL = [(e-sleep_time) for e in L]
+        for e in range(len(newL)):
+            if newL[e] == 0:
+                print "Stopping pin %d" % (e+1)
+        conc_helper(newL)
+    else:
+        return
 
 if __name__ == '__main__':
     app.run()
