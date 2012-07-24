@@ -52,24 +52,24 @@ def pour(ingredients):
 # Open all required valves at once and close when necessary
 def conc_helper(L, highPins):
     """
-    This helper function enables concurrent pouring.
-    Opens all required valves immediately and closes each when necessary.
+    This function fires up all required Arduino pins immediately,
+    and powers down each when its ingredient is fully poured.
     """
     # Recurse until all ingredients are completely poured
     if any([e for e in L if e > 0]):
         for e in range(len(L)):
             if L[e] > 0 and e not in highPins:
                 highPins += [e]
-                print "Starting pin %d" % (e)
+                print "Writing HIGH to Pin %d" % e
         # Leave pins high until at least one ingredient is completely poured
-        sleep_time = min([e for e in L if e > 0])
-        time.sleep(sleep_time)
+        pour_time = min([e for e in L if e > 0])
+        time.sleep(pour_time)
         # Subtract time elapsed from all ingredients
-        newL = [(e-sleep_time) for e in L]
+        newL = [(e-pour_time) for e in L]
         # Turn off pins whose ingredients are completely poured
         for e in range(len(newL)):
             if newL[e] == 0:
-                print "Stopping pin %d" % (e)
+                print "Writing LOW to Pin %d" % e
         # Recurse on adjusted list
         conc_helper(newL, highPins)
     else:
