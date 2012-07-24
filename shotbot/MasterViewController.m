@@ -76,8 +76,6 @@
                 reuseIdentifier:CellIdentifier];
     }
     
-    // [self configureCell:cell atIndexPath:indexPath];
-    
     cell.textLabel.text = [drinkNames objectAtIndex:indexPath.row];      
     return cell;
 }
@@ -85,7 +83,9 @@
 - (void)populateDrinkList {
     // Create the drink array which appears in the table
     self.drinkNames = [[NSArray alloc] initWithObjects:
-                       @"Screwdriver", @"Tequila Sunrise", @"Whiskey Sour", nil];
+                      @"Bay Breeze", @"Cosmopolitan", @"Green Monster",
+                       @"Green Widow", @"Margarita", @"Screwdriver", 
+                       @"Tequila Sunrise", @"Whiskey Sour", nil];
     
 }
 
@@ -93,9 +93,59 @@
     // List cases for different drinks  (check string instead of object index for better readability)
     // Update ingredients appropriately.
     NSString *chosenDrink = [drinkNames objectAtIndex:indexPath.row];
-    NSLog(@"%@", chosenDrink);
+    // NSLog(@"%@", chosenDrink);
     
-    if (chosenDrink == @"Screwdriver") {
+    if (chosenDrink == @"Bay Breeze") {
+        self.detailViewController.slider1.value = 0.0;
+        self.detailViewController.slider2.value = 0.0;
+        self.detailViewController.slider3.value = 0.6;
+        self.detailViewController.slider4.value = 0.0;
+        self.detailViewController.slider5.value = 0.0;
+        self.detailViewController.slider6.value = 0.4;
+        self.detailViewController.slider7.value = 0.4;
+        self.detailViewController.slider8.value = 0.0;
+    }
+    else if (chosenDrink == @"Cosmopolitan") {
+        self.detailViewController.slider1.value = 0.0;
+        self.detailViewController.slider2.value = 0.0;
+        self.detailViewController.slider3.value = 0.6;
+        self.detailViewController.slider4.value = 0.0;
+        self.detailViewController.slider5.value = 0.3;
+        self.detailViewController.slider6.value = 0.0;
+        self.detailViewController.slider7.value = 0.4;
+        self.detailViewController.slider8.value = 0.2;
+    }
+    else if (chosenDrink == @"Green Monster") {
+        self.detailViewController.slider1.value = 0.0;
+        self.detailViewController.slider2.value = 0.0;
+        self.detailViewController.slider3.value = 0.0;
+        self.detailViewController.slider4.value = 0.4;
+        self.detailViewController.slider5.value = 0.0;
+        self.detailViewController.slider6.value = 0.0;
+        self.detailViewController.slider7.value = 0.0;
+        self.detailViewController.slider8.value = 0.4;
+    }
+    else if (chosenDrink == @"Green Widow") {
+        self.detailViewController.slider1.value = 0.0;
+        self.detailViewController.slider2.value = 0.0;
+        self.detailViewController.slider3.value = 0.0;
+        self.detailViewController.slider4.value = 0.4;
+        self.detailViewController.slider5.value = 0.6;
+        self.detailViewController.slider6.value = 0.0;
+        self.detailViewController.slider7.value = 0.0;
+        self.detailViewController.slider8.value = 0.0;
+    }
+    else if (chosenDrink == @"Margarita") {
+        self.detailViewController.slider1.value = 0.0;
+        self.detailViewController.slider2.value = 0.7;
+        self.detailViewController.slider3.value = 0.0;
+        self.detailViewController.slider4.value = 0.0;
+        self.detailViewController.slider5.value = 0.1;
+        self.detailViewController.slider6.value = 0.0;
+        self.detailViewController.slider7.value = 0.0;
+        self.detailViewController.slider8.value = 0.4;
+    }
+    else if (chosenDrink == @"Screwdriver") {
         self.detailViewController.slider1.value = 0.0;
         self.detailViewController.slider2.value = 0.0;
         self.detailViewController.slider3.value = 0.8;

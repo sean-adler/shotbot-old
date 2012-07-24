@@ -10,8 +10,6 @@
 
 @interface DetailViewController : UIViewController <UISplitViewControllerDelegate> {
     
-    NSMutableData *receivedData;
-    
     IBOutlet UIButton *pourDrinkButton;
     
     IBOutlet UISlider *slider1;
@@ -31,6 +29,8 @@
     IBOutlet UISlider *slider8;
     
 }
+
+@property (nonatomic, retain) UIButton *pourDrinkButton;
 
 @property (nonatomic, retain) NSMutableArray *sliderList;
 @property (nonatomic, retain) NSMutableArray *sliderLabelList;

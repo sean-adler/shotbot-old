@@ -16,6 +16,8 @@
 		7296482015B947860076851A /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7296481E15B947860076851A /* MainStoryboard.storyboard */; };
 		7296482315B947860076851A /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7296482215B947860076851A /* MasterViewController.m */; };
 		7296482615B947860076851A /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7296482515B947860076851A /* DetailViewController.m */; };
+		72AB729915BE5B9D00A7063E /* blueButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 72AB729715BE5B9D00A7063E /* blueButton.png */; };
+		72AB729A15BE5B9D00A7063E /* whiteButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 72AB729815BE5B9D00A7063E /* whiteButton.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,10 +25,10 @@
 		7296480C15B947860076851A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7296480E15B947860076851A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7296481015B947860076851A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		7296481415B947860076851A /* ShotBot-Info.plist */ = {isa = PBXFileReference; path = "ShotBot-Info.plist"; sourceTree = "<group>"; };
+		7296481415B947860076851A /* ShotBot-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ShotBot-Info.plist"; sourceTree = "<group>"; };
 		7296481615B947860076851A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		7296481815B947860076851A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		7296481A15B947860076851A /* ShotBot-Prefix.pch */ = {isa = PBXFileReference; path = "ShotBot-Prefix.pch"; sourceTree = "<group>"; };
+		7296481A15B947860076851A /* ShotBot-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ShotBot-Prefix.pch"; sourceTree = "<group>"; };
 		7296481B15B947860076851A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7296481C15B947860076851A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		7296481F15B947860076851A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
@@ -34,6 +36,8 @@
 		7296482215B947860076851A /* MasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
 		7296482415B947860076851A /* DetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		7296482515B947860076851A /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		72AB729715BE5B9D00A7063E /* blueButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blueButton.png; sourceTree = "<group>"; };
+		72AB729815BE5B9D00A7063E /* whiteButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteButton.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +57,7 @@
 		729647FD15B947860076851A = {
 			isa = PBXGroup;
 			children = (
+				72AB729615BE5B9D00A7063E /* Images */,
 				7296481215B947860076851A /* shotbot */,
 				7296480B15B947860076851A /* Frameworks */,
 				7296480915B947860076851A /* Products */,
@@ -89,7 +94,6 @@
 				7296482515B947860076851A /* DetailViewController.m */,
 				7296481315B947860076851A /* Supporting Files */,
 			);
-			name = shotbot;
 			path = shotbot;
 			sourceTree = "<group>";
 		};
@@ -102,6 +106,15 @@
 				7296481A15B947860076851A /* ShotBot-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		72AB729615BE5B9D00A7063E /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				72AB729715BE5B9D00A7063E /* blueButton.png */,
+				72AB729815BE5B9D00A7063E /* whiteButton.png */,
+			);
+			path = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -156,6 +169,8 @@
 			files = (
 				7296481715B947860076851A /* InfoPlist.strings in Resources */,
 				7296482015B947860076851A /* MainStoryboard.storyboard in Resources */,
+				72AB729915BE5B9D00A7063E /* blueButton.png in Resources */,
+				72AB729A15BE5B9D00A7063E /* whiteButton.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

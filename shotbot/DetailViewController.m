@@ -15,6 +15,8 @@
 
 @implementation DetailViewController
 
+@synthesize pourDrinkButton;
+
 @synthesize sliderList;
 @synthesize sliderLabelList;
 @synthesize urlString;
@@ -82,6 +84,18 @@
 
 - (void)viewDidLoad
 {
+    // Create nice button
+    UIImage *normalButton =[[UIImage imageNamed:@"whiteButton.png"]
+                            stretchableImageWithLeftCapWidth:12.0
+                            topCapHeight:0.0];
+    UIImage *blueButton = [[UIImage imageNamed:@"blueButton.png"]
+                           stretchableImageWithLeftCapWidth:12.0
+                           topCapHeight:0.0];
+    [self.pourDrinkButton setBackgroundImage:normalButton
+                                    forState:UIControlStateNormal];
+    [self.pourDrinkButton setBackgroundImage:blueButton
+                                    forState:UIControlStateHighlighted];
+    
     // Store all sliders in a list
     sliderList = [[NSMutableArray alloc] init];
     [sliderList addObject:slider1];
