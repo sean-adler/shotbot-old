@@ -38,15 +38,15 @@
         [drinkString appendString:[NSString stringWithFormat:@"%d", drinkAmount]];
     }
     // Change practiceURL to the Flask server URL
-    NSString *practiceURL = [NSString stringWithFormat:@"http://127.0.0.1:5000/%@", drinkString];
+    NSString *practiceURL = [NSString stringWithFormat:@"http://127.0.0.1:5000/pour/%@", drinkString];
     NSURL *url = [NSURL URLWithString:practiceURL];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
-    // Create connection -- request the fuckin URL!
+    // Create connection -- request the URL!
     NSURLConnection *urlConnection = [NSURLConnection connectionWithRequest:urlRequest delegate:self];
     if (urlConnection) {
         NSLog(@"Connection made! Requesting %@", practiceURL);
     } else {
-        NSLog(@"Connection never made ;(");
+        NSLog(@"Connection failed ;(");
     }
 }
 

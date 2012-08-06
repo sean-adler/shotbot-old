@@ -1,5 +1,5 @@
 from arduino import Arduino
-from flask import Flask
+from flask import Flask, request, session, url_for, render_template
 
 import time
 
@@ -36,44 +36,58 @@ sour_mix = 7
 # Create server
 app = Flask(__name__)
 
-# Declare the server's only route
-@app.route('/<ingredients>')
-
-def pour(ingredients):
+# Route takes drink requests
+@app.route('/pour/<ingredients>')
+def pass_req(ingredients):
     """
-    Take the URL string and pass it to our recursive function
+    Take the URL string and pass it to recursive 'pour' function
     as a list of ints.
     """
-    ingredientList = list([int(e) for e in ingredients])
-    conc_helper(ingredientList, [])
-    return ""
+    # The ingredient list is just a numerical representation of how long
+    # each ingredient's corresponding pin will be HIGH to open its valve
+    ingredientList = list([int(n) for n in ingredients])
+    pour(ingredientList, [])
+    with open("log.txt", "a") as log:
+        log.write(ingredients)
+        log.write("\n")
+    return ingredients
 
 # Helper function: Allows concurrent pouring
-# Open all required valves at once and close when necessary
-def conc_helper(L, highPins):
+# Opens all required valves at once and closes them when necessary
+def pour(pinDurations, highPins):
     """
     This function fires up all required Arduino pins immediately,
     and powers down each when its ingredient is fully poured.
     """
     # Recurse until all ingredients are completely poured
-    if any([e for e in L if e > 0]):
-        for e in range(len(L)):
-            if L[e] > 0 and e not in highPins:
-                highPins += [e]
-                print "Writing HIGH to Pin %d" % e
+    if any([p for p in pinDurations if p > 0]):
+        for p in range(len(pinDurations)):
+            if pinDurations[p] > 0 and p not in highPins:
+                highPins.append(p)
+                print "Writing HIGH to Pin %d" % p
         # Leave pins high until at least one ingredient is completely poured
-        pour_time = min([e for e in L if e > 0])
+        pour_time = min([p for p in pinDurations if p > 0])
         time.sleep(pour_time)
         # Subtract time elapsed from all ingredients
-        newL = [(e-pour_time) for e in L]
+        newDurations = [(p-pour_time) for p in pinDurations]
         # Turn off pins whose ingredients are completely poured
-        for e in range(len(newL)):
-            if newL[e] == 0:
-                print "Writing LOW to Pin %d" % e
+        for p in range(len(newDurations)):
+            if newDurations[p] == 0:
+                print "Writing LOW to Pin %d" % p
         # Recurse on adjusted list
-        conc_helper(newL, highPins)
+        pour(newDurations, highPins)
     else:
         return
+
+@app.route('/chart')
+def draw_chart():
+    drinkTotals = [0,0,0,0,0,0,0,0]
+    with open('/Users/SDA/shotbot/flask_server/log.txt') as log:
+        drinkData = log.readlines()
+    for i in range(len(drinkTotals)):
+        for drink in drinkData:
+            drinkTotals[i] += int(drink[i])
+    return render_template('chart.html', drinkTotals=drinkTotals)
 
 if __name__ == '__main__':
     app.run()
