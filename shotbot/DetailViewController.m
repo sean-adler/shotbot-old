@@ -27,24 +27,36 @@
 @synthesize detailDescriptionLabel = _detailDescriptionLabel;
 @synthesize masterPopoverController = _masterPopoverController;
 
-#pragma mark - Slider value methods
+#pragma mark - Main action method (pour dat drank!)
 
 - (IBAction)pourDrink:(id)sender {
     // We expect the string to be 8 characters long
-    NSMutableString *drinkString = [[NSMutableString alloc] init];
+    NSMutableString *sliderValuesString = [[NSMutableString alloc] init];
     // Append to address string the values from all sliders
     for (UISlider *slider in sliderList) {
         int drinkAmount = slider.value*10;
-        [drinkString appendString:[NSString stringWithFormat:@"%d", drinkAmount]];
+        // Prevent '10' value from screwing up argument string.
+        // Current fix: Turn 10 into 9.
+        NSMutableString *ingredientString;
+        
+        if (drinkAmount == 10.0)
+        {
+            ingredientString = [NSMutableString stringWithFormat:@"9"];
+            
+        } else {
+            ingredientString = [NSMutableString stringWithFormat:@"%d", drinkAmount];
+        }
+        
+        [sliderValuesString appendString: ingredientString];
     }
-    // Change practiceURL to the Flask server URL
-    NSString *practiceURL = [NSString stringWithFormat:@"http://127.0.0.1:5000/pour/%@", drinkString];
-    NSURL *url = [NSURL URLWithString:practiceURL];
+    // Create argument string for Flask server request
+    NSString *flaskURLString = [NSString stringWithFormat:@"http://127.0.0.1:5000/pour/%@", sliderValuesString];
+    NSURL *url = [NSURL URLWithString:flaskURLString];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
     // Create connection -- request the URL!
     NSURLConnection *urlConnection = [NSURLConnection connectionWithRequest:urlRequest delegate:self];
     if (urlConnection) {
-        NSLog(@"Connection made! Requesting %@", practiceURL);
+        NSLog(@"Connection made! Requesting %@", flaskURLString);
     } else {
         NSLog(@"Connection failed ;(");
     }

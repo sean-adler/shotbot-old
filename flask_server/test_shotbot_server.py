@@ -1,7 +1,9 @@
 from arduino import Arduino
-from flask import Flask, request, session, url_for, render_template
+from flask import Flask, render_template
 from time import sleep
-from static.ingredients import getDrinkList, getDrinkInfo
+#from static.ingredients import getDrinkList, getDrinkInfo
+from utils import *
+import os
 
 ###########################
 ###    Arduino setup    ###
@@ -49,7 +51,8 @@ def prepare_request(ingredients):
     # pass list to pour() function, 2nd arg: no pins are high.
     pour(ingredientList, [])
     # log the drink
-    with open("log.txt", "a") as log:
+    logPath = getLogPath()
+    with open(logPath, "a") as log:
         log.write(ingredients)
         log.write("\n")
     # unnecessary return statement
@@ -88,8 +91,7 @@ def quantity_chart():
     """
     drinkTotals = [0,0,0,0,0,0,0,0]
     # read log file
-    with open('/Users/SDA/shotbot/flask_server/log.txt') as log:
-        drinkData = log.readlines()
+    drinkData = getLog()
     for i in range(len(drinkTotals)):
         for drink in drinkData:
             drinkTotals[i] += int(drink[i])
@@ -101,17 +103,18 @@ def drink_chart():
     """
     Tallies types of drinks consumed.
     """
+    # import drink dict
     drinkInfo = getDrinkInfo()
-
     # read log file
-    with open('/Users/SDA/shotbot/flask_server/log.txt') as log:
-        drinkData = log.readlines()
+    log = getLog()
     # increment counts
-    for line in drinkData:
+    for line in log:
         drink = line[0:8]
         for d in drinkInfo:
             if drink == drinkInfo[d]['ingredients']:
                 drinkInfo[d]['count'] += 1
+                break
+            drinkInfo['Custom Drinks']['count'] += 1
            # else:
             #    drinkInfo['Custom Drinks']['count'] += 1
 
@@ -130,10 +133,9 @@ def show_status():
     quantitiesLeft = [100,100,100,100,100,100,100,100]
 
     # read log file
-    with open('/Users/SDA/shotbot/flask_server/log.txt') as log:
-        drinkData = log.readlines()
+    log = getLog()
     for i in range(len(quantitiesLeft)):
-        for drink in drinkData:
+        for drink in log:
             quantitiesLeft[i] -= int(drink[i])
     #render_template('status.html', quantitiesLeft=quantitiesLeft)
     
@@ -144,6 +146,11 @@ def show_status():
 def show_drinks():
     # get ingredient list -- test the import
     return str(getDrinkInfo())
+
+@app.route('/log')
+def log():
+    return getLog()
+    
 
 if __name__ == '__main__':
     app.run()
