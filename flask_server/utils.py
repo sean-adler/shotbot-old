@@ -40,12 +40,13 @@ def getDrinkInfo():
     """
     Outputs a dictionary containing all drink names, and their
     corresponding ingredients and counts (times consumed).
-    Counts start at 0 and are modified by 
+    Counts start at 0 and are modified by drink_chart() in
+    test_shotbot_server.py.
     """
     drinkInfo = {
                 'Bay Breeze': {'ingredients': '00600440',
                                 'count': 0},
-                 'Cosmopolitan': {'ingredients': '00600440',
+                 'Cosmopolitan': {'ingredients': '00603042',
                                     'count': 0},
                  'Green Monster': {'ingredients': '00040004',
                                     'count': 0},

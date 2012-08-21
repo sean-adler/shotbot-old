@@ -1,7 +1,6 @@
 from arduino import Arduino
 from flask import Flask, render_template
 from time import sleep
-#from static.ingredients import getDrinkList, getDrinkInfo
 from utils import *
 import os
 
@@ -61,25 +60,28 @@ def prepare_request(ingredients):
 # Opens all required valves at once and closes them when necessary.
 def pour(pinDurations, highPins):
     """
-    This function fires up all required Arduino pins immediately,
-    and powers down each when its ingredient is fully poured.
+    Takes two lists of ints: pinDurations, which corresponds to
+    pour times of each ingredient stored in ShotBot, and
+    highPins, which keeps track of which pins are currently high.
+    Fires up the required Arduino pins immediately,
+    powering down each when the ingredient is fully poured.
     """
-    # Recurse until all ingredients are completely poured
-    if any([p for p in pinDurations if p > 0]):
+    # Recurse until all ingredients are completely poured.
+    if any(p for p in pinDurations if p > 0):
         for p in range(len(pinDurations)):
             if pinDurations[p] > 0 and p not in highPins:
                 highPins.append(p)
                 print "Writing HIGH to Pin %d" % p
-        # Leave pins high until at least one ingredient is completely poured
+        # Leave pins high until at least one ingredient is completely poured.
         pour_time = min(p for p in pinDurations if p > 0)
         sleep(pour_time)
         # Update durations
         newDurations = [(p-pour_time) for p in pinDurations]
-        # Turn off pins whose ingredients are completely poured
+        # Turn off pins whose ingredients are completely poured.
         for p in range(len(newDurations)):
             if newDurations[p] == 0:
                 print "Writing LOW to Pin %d" % p
-        # Recurse on adjusted list
+        # Recurse on adjusted list.
         pour(newDurations, highPins)
     else:
         return
@@ -87,10 +89,9 @@ def pour(pinDurations, highPins):
 @app.route('/qchart')
 def quantity_chart():
     """
-    Tallies ingredient quantities and passes array to chart.html
+    Tallies ingredient quantities and passes array to /templates/chart.html.
     """
     drinkTotals = [0,0,0,0,0,0,0,0]
-    # read log file
     drinkData = getLog()
     for i in range(len(drinkTotals)):
         for drink in drinkData:
@@ -103,25 +104,23 @@ def drink_chart():
     """
     Tallies types of drinks consumed.
     """
-    # import drink dict
-    drinkInfo = getDrinkInfo()
-    # read log file
+    drinkDict = getDrinkInfo()
+    # Read log file.
     log = getLog()
-    # increment counts
-    for line in log:
-        drink = line[0:8]
-        for d in drinkInfo:
-            if drink == drinkInfo[d]['ingredients']:
-                drinkInfo[d]['count'] += 1
-                break
-            drinkInfo['Custom Drinks']['count'] += 1
-           # else:
-            #    drinkInfo['Custom Drinks']['count'] += 1
-
+    for ingrs in log:
+        # Check for custom drinks (not in drinkInfo).
+        if not any([ingrs in [drinkDict[drink]['ingredients'] for drink in drinkDict]]):
+            drinkDict['Custom Drinks']['count'] += 1
+        # Otherwise increment the appropriate count.
+        else:
+            for drink in drinkDict:
+                if ingrs == drinkDict[drink]['ingredients']:
+                    drinkDict[drink]['count'] += 1
+            
     #return render_template('drink_chart.html', drinkCount=drinkCount)
     
     ## placeholder return:
-    return str(drinkInfo)
+    return str(drinkDict)
     
 @app.route('/status')
 def show_status():
@@ -144,7 +143,6 @@ def show_status():
 
 @app.route('/drinklist')
 def show_drinks():
-    # get ingredient list -- test the import
     return str(getDrinkInfo())
 
 @app.route('/log')
