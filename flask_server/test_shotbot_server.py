@@ -1,6 +1,7 @@
 from arduino import Arduino
 from flask import Flask, request, session, url_for, render_template
 from time import sleep
+from static.ingredients import getDrinkList, getDrinkCount
 
 ###########################
 ###    Arduino setup    ###
@@ -10,10 +11,10 @@ from time import sleep
 #uno = Arduino('/dev/tty.usbmodem621')
 
 """
-PIN ASSOCIATIONS
-
-Purely for documentation (these vars are never used)
-
+================
+PIN DECLARATIONS
+================
+(These vars are never used: Here for documentation only.)
 whiskey = 0
 tequila = 1
 vodka = 2
@@ -100,28 +101,16 @@ def drink_chart():
     """
     Tallies types of drinks consumed.
     """
-    ## import dictionary/JSON from /static folder?
-    
-    ## or just make one here.
-    drinkDict = {}
-    drinkDict['00046000'] = 'Screwdriver'
-    drinkDict['07001004'] = 'Tequila Sunrise'
-    drinkDict['08001040'] = 'Cosmopolitan'
-
-    ## really should be importing these from somewhere.
-    drinkCount = {}
-    drinkCount['Screwdriver'] = 0
-    drinkCount['Tequila Sunrise'] = 0
-    drinkCount['Cosmopolitan'] = 0
-    drinkCount['Unknown Drink'] = 0
+    drinkList = getDrinkList()
+    drinkCount = getDrinkCount()
 
     # read log file
     with open('/Users/SDA/shotbot/flask_server/log.txt') as log:
         drinkData = log.readlines()
     for d in drinkData:
         drink = d[0:8]
-        if drink in drinkDict:
-            drinkCount[drinkDict[drink]] += 1
+        if drink in drinkList:
+            drinkCount[drinkList[drink]] += 1
         else:
             drinkCount['Unknown Drink'] += 1
 
@@ -149,7 +138,11 @@ def show_status():
     
     ## placeholder return:
     return str(quantitiesLeft)
-    
+
+@app.route('/drinklist')
+def show_drinks():
+    # get ingredient list -- test the import
+    return str(getDrinkList())
 
 if __name__ == '__main__':
     app.run()
