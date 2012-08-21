@@ -1,7 +1,6 @@
 from arduino import Arduino
 from flask import Flask, request, session, url_for, render_template
-
-import time
+from time import sleep
 
 ###########################
 ###    Arduino setup    ###
@@ -38,22 +37,24 @@ app = Flask(__name__)
 
 # Route takes drink requests
 @app.route('/pour/<ingredients>')
-def pass_req(ingredients):
+def prepare_request(ingredients):
     """
-    Take the URL string and pass it to recursive 'pour' function
+    Takes the URL string and passes it to the recursive 'pour' function
     as a list of ints.
     """
-    # The ingredient list is just a numerical representation of how long
-    # each ingredient's corresponding pin will be HIGH to open its valve
-    ingredientList = list([int(n) for n in ingredients])
+    # The ingredient list is a numerical representation of how long
+    # each ingredient's corresponding pin will be HIGH (open valve).
+    ingredientList = [int(n) for n in ingredients]
+    # pass list to pour() function, 2nd arg: no pins are high.
     pour(ingredientList, [])
+    # log the drink
     with open("log.txt", "a") as log:
         log.write(ingredients)
         log.write("\n")
+    # unnecessary return statement
     return ingredients
 
-# Helper function: Allows concurrent pouring
-# Opens all required valves at once and closes them when necessary
+# Opens all required valves at once and closes them when necessary.
 def pour(pinDurations, highPins):
     """
     This function fires up all required Arduino pins immediately,
@@ -66,9 +67,9 @@ def pour(pinDurations, highPins):
                 highPins.append(p)
                 print "Writing HIGH to Pin %d" % p
         # Leave pins high until at least one ingredient is completely poured
-        pour_time = min([p for p in pinDurations if p > 0])
-        time.sleep(pour_time)
-        # Subtract time elapsed from all ingredients
+        pour_time = min(p for p in pinDurations if p > 0)
+        sleep(pour_time)
+        # Update durations
         newDurations = [(p-pour_time) for p in pinDurations]
         # Turn off pins whose ingredients are completely poured
         for p in range(len(newDurations)):
@@ -79,15 +80,76 @@ def pour(pinDurations, highPins):
     else:
         return
 
-@app.route('/chart')
-def draw_chart():
+@app.route('/qchart')
+def quantity_chart():
+    """
+    Tallies ingredient quantities and passes array to chart.html
+    """
     drinkTotals = [0,0,0,0,0,0,0,0]
+    # read log file
     with open('/Users/SDA/shotbot/flask_server/log.txt') as log:
         drinkData = log.readlines()
     for i in range(len(drinkTotals)):
         for drink in drinkData:
             drinkTotals[i] += int(drink[i])
     return render_template('chart.html', drinkTotals=drinkTotals)
+
+
+@app.route('/dchart')
+def drink_chart():
+    """
+    Tallies types of drinks consumed.
+    """
+    ## import dictionary/JSON from /static folder?
+    
+    ## or just make one here.
+    drinkDict = {}
+    drinkDict['00046000'] = 'Screwdriver'
+    drinkDict['07001004'] = 'Tequila Sunrise'
+    drinkDict['08001040'] = 'Cosmopolitan'
+
+    ## really should be importing these from somewhere.
+    drinkCount = {}
+    drinkCount['Screwdriver'] = 0
+    drinkCount['Tequila Sunrise'] = 0
+    drinkCount['Cosmopolitan'] = 0
+    drinkCount['Unknown Drink'] = 0
+
+    # read log file
+    with open('/Users/SDA/shotbot/flask_server/log.txt') as log:
+        drinkData = log.readlines()
+    for d in drinkData:
+        drink = d[0:8]
+        if drink in drinkDict:
+            drinkCount[drinkDict[drink]] += 1
+        else:
+            drinkCount['Unknown Drink'] += 1
+
+    #return render_template('drink_chart.html', drinkCount=drinkCount)
+    
+    ## placeholder return:
+    return str(drinkCount)
+    
+@app.route('/status')
+def show_status():
+    """
+    Draws a bar chart showing your remaining ingredient quantities.
+    """
+    ## need calibration here: Not all ingredients pour at equal speeds.
+    ## also: 100 is an arbitrary placeholder, need to estimate this.
+    quantitiesLeft = [100,100,100,100,100,100,100,100]
+
+    # read log file
+    with open('/Users/SDA/shotbot/flask_server/log.txt') as log:
+        drinkData = log.readlines()
+    for i in range(len(quantitiesLeft)):
+        for drink in drinkData:
+            quantitiesLeft[i] -= int(drink[i])
+    #render_template('status.html', quantitiesLeft=quantitiesLeft)
+    
+    ## placeholder return:
+    return str(quantitiesLeft)
+    
 
 if __name__ == '__main__':
     app.run()
