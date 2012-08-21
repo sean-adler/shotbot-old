@@ -1,2 +1,3 @@
 log.txt
-*xcuserstate
+*.pyc
+*.xcuserstate
