@@ -27,6 +27,15 @@ def getLog():
     
     return cleanedLog
 
+def clearLog():
+    """
+    Erases contents of the log.txt file.
+    """
+    logPath = getLogPath()
+
+    with open(logPath, 'w') as f:
+        f.write('')
+
 def getDrinkInfo():
     """
     Outputs a dictionary containing all drink names, and their

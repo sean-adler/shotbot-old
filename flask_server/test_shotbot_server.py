@@ -149,7 +149,12 @@ def show_drinks():
 
 @app.route('/log')
 def log():
-    return getLog()
+    return str(getLog())
+
+@app.route('/clear')
+def clear():
+    clearLog()
+    return 'Log cleared!'
     
 
 if __name__ == '__main__':
