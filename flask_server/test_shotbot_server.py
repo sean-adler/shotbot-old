@@ -1,7 +1,7 @@
 from arduino import Arduino
 from flask import Flask, request, session, url_for, render_template
 from time import sleep
-from static.ingredients import getDrinkList, getDrinkCount
+from static.ingredients import getDrinkList, getDrinkInfo
 
 ###########################
 ###    Arduino setup    ###
@@ -101,23 +101,24 @@ def drink_chart():
     """
     Tallies types of drinks consumed.
     """
-    drinkList = getDrinkList()
-    drinkCount = getDrinkCount()
+    drinkInfo = getDrinkInfo()
 
     # read log file
     with open('/Users/SDA/shotbot/flask_server/log.txt') as log:
         drinkData = log.readlines()
-    for d in drinkData:
-        drink = d[0:8]
-        if drink in drinkList:
-            drinkCount[drinkList[drink]] += 1
-        else:
-            drinkCount['Unknown Drink'] += 1
+    # increment counts
+    for line in drinkData:
+        drink = line[0:8]
+        for d in drinkInfo:
+            if drink == drinkInfo[d]['ingredients']:
+                drinkInfo[d]['count'] += 1
+           # else:
+            #    drinkInfo['Custom Drinks']['count'] += 1
 
     #return render_template('drink_chart.html', drinkCount=drinkCount)
     
     ## placeholder return:
-    return str(drinkCount)
+    return str(drinkInfo)
     
 @app.route('/status')
 def show_status():
@@ -142,7 +143,7 @@ def show_status():
 @app.route('/drinklist')
 def show_drinks():
     # get ingredient list -- test the import
-    return str(getDrinkList())
+    return str(getDrinkInfo())
 
 if __name__ == '__main__':
     app.run()
