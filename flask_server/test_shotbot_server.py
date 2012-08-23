@@ -8,7 +8,8 @@ import os
 ###    Arduino setup    ###
 ###########################
 
-# Specify the Uno's port as an argument
+# Specify the Uno's port as an argument.
+
 #uno = Arduino('/dev/tty.usbmodem621')
 
 """
@@ -37,49 +38,55 @@ sour_mix = 7
 # Create server
 app = Flask(__name__)
 
+# Called if exception is raised
+@app.teardown_request
+def teardown_request(exception):
+    #uno.turnOff()
+    #irrelevant return statement.
+    return ''
+
 # Route takes drink requests
 @app.route('/pour/<ingredients>')
 def prepare_request(ingredients):
     """
-    Takes the URL string and passes it to the recursive 'pour' function
+    Takes the 8-digit URL string and passes it to the recursive 'pour' function
     as a list of ints.
     """
-    # The ingredient list is a numerical representation of how long
-    # each ingredient's corresponding pin will be HIGH (open valve).
     ingredientList = [int(n) for n in ingredients]
-    # pass list to pour() function, 2nd arg: no pins are high.
+    # 2nd arg list: no pins are HIGH yet.
     pour(ingredientList, [])
-    # log the drink
     logPath = getLogPath()
     with open(logPath, "a") as log:
         log.write(ingredients)
         log.write("\n")
-    # unnecessary return statement
+    # irrelevant return value.
     return ingredients
 
 # Opens all required valves at once and closes them when necessary.
 def pour(pinDurations, highPins):
     """
     Takes two lists of ints: pinDurations, which corresponds to
-    pour times of each ingredient stored in ShotBot, and
-    highPins, which keeps track of which pins are currently high.
+    pour times of each ingredient stored with ShotBot, and
+    highPins, which keeps track of which pins are currently HIGH.
     Fires up the required Arduino pins immediately,
-    powering down each when the ingredient is fully poured.
+    powering down each when its ingredient is fully poured.
     """
     # Recurse until all ingredients are completely poured.
     if any(p for p in pinDurations if p > 0):
         for p in range(len(pinDurations)):
             if pinDurations[p] > 0 and p not in highPins:
                 highPins.append(p)
+                #uno.setHigh(p)
                 print "Writing HIGH to Pin %d" % p
         # Leave pins high until at least one ingredient is completely poured.
         pour_time = min(p for p in pinDurations if p > 0)
         sleep(pour_time)
-        # Update durations
+        # Update durations.
         newDurations = [(p-pour_time) for p in pinDurations]
         # Turn off pins whose ingredients are completely poured.
         for p in range(len(newDurations)):
             if newDurations[p] == 0:
+                #uno.setLow(p)
                 print "Writing LOW to Pin %d" % p
         # Recurse on adjusted list.
         pour(newDurations, highPins)
@@ -96,7 +103,7 @@ def quantity_chart():
     for i in range(len(drinkTotals)):
         for drink in drinkData:
             drinkTotals[i] += int(drink[i])
-    return render_template('chart.html', drinkTotals=drinkTotals)
+    return render_template('qchart.html', drinkTotals=drinkTotals)
 
 
 @app.route('/dchart')
@@ -104,23 +111,31 @@ def drink_chart():
     """
     Tallies types of drinks consumed.
     """
-    drinkDict = getDrinkInfo()
-    # Read log file.
+    drinkInfo = getDrinkInfo()
     log = getLog()
     for ingrs in log:
-        # Check for custom drinks (not in drinkInfo).
-        if not any([ingrs in [drinkDict[drink]['ingredients'] for drink in drinkDict]]):
-            drinkDict['Custom Drinks']['count'] += 1
+        # Check for custom drinks.
+        if not any([ingrs in [drinkInfo[drink]['ingredients'] for drink in drinkInfo]]):
+            drinkInfo['Custom Drinks']['count'] += 1
         # Otherwise increment the appropriate count.
         else:
-            for drink in drinkDict:
-                if ingrs == drinkDict[drink]['ingredients']:
-                    drinkDict[drink]['count'] += 1
-            
-    #return render_template('drink_chart.html', drinkCount=drinkCount)
-    
-    ## placeholder return:
-    return str(drinkDict)
+            for drink in drinkInfo:
+                if ingrs == drinkInfo[drink]['ingredients']:
+                    drinkInfo[drink]['count'] += 1
+                    #drinkCountDict[drink] += 1
+    # Convert count to list and send to JavaScript.
+    #names = [drink for drink in drinkInfo]
+    #names = ''
+    #for drink in drinks:
+    #    names += drink
+    counts = [drinkInfo[drink]['count'] for drink in drinkInfo]
+    # Format lists for JavaScript.
+    #names.insert(0, '')
+    #counts.insert(0, '')
+    #drinkCountList = [drinkCountDict[drink] for drink in drinkCountDict]
+    #listForJS = [names, counts]
+    return render_template('dchart.html', counts=counts)
+    #return str(listForJS)
     
 @app.route('/status')
 def show_status():
