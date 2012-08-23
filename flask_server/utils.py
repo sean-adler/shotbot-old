@@ -36,6 +36,14 @@ def clearLog():
     with open(logPath, 'w') as f:
         f.write('')
 
+def getIngredients():
+    """
+    Outputs a list of the ingredients ShotBot can pour.
+    """
+    ingredients = ['Whiskey', 'Tequila', 'Vodka', 'Blue Curacao', 'Orange Juice',
+                   'Pineapple Juice', 'Cranberry Juice', 'Sour Mix']
+    return ingredients
+
 def getDrinkInfo():
     """
     Outputs a dictionary containing all drink names, and their

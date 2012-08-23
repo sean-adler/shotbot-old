@@ -3,6 +3,7 @@ from flask import Flask, render_template
 from time import sleep
 from utils import *
 import os
+import json
 
 ###########################
 ###    Arduino setup    ###
@@ -42,7 +43,7 @@ app = Flask(__name__)
 @app.teardown_request
 def teardown_request(exception):
     #uno.turnOff()
-    #irrelevant return statement.
+    # placeholder return statement.
     return ''
 
 # Route takes drink requests
@@ -99,12 +100,15 @@ def quantity_chart():
     Tallies ingredient quantities and passes array to /templates/chart.html.
     """
     drinkTotals = [0,0,0,0,0,0,0,0]
+    ingrs = getIngredients()
+    qChartList = [['Drink', 'Total Seconds Poured']]
     drinkData = getLog()
     for i in range(len(drinkTotals)):
         for drink in drinkData:
             drinkTotals[i] += int(drink[i])
-    return render_template('qchart.html', drinkTotals=drinkTotals)
-
+        qChartList += [[ingrs[i], drinkTotals[i]]]
+    
+    return render_template('qchart.html', qChartList=qChartList)
 
 @app.route('/dchart')
 def drink_chart():
@@ -122,28 +126,26 @@ def drink_chart():
             for drink in drinkInfo:
                 if ingrs == drinkInfo[drink]['ingredients']:
                     drinkInfo[drink]['count'] += 1
+    drinkNames = [drink for drink in drinkInfo]
     # Create counts list and send it to JS.
     counts = [drinkInfo[drink]['count'] for drink in drinkInfo]
-    return render_template('dchart.html', counts=counts)
+    return render_template('dchart.html', drinkNames=drinkNames, counts=counts)
     
 @app.route('/statuschart')
-def show_status():
+def status_chart():
     """
     Draws a bar chart showing your remaining ingredient quantities.
     """
+    
     ## need calibration here: Not all ingredients pour at equal speeds.
     ## also: 100 is an arbitrary placeholder.
     quantitiesLeft = [100,100,100,100,100,100,100,100]
-
-    # read log file
+    ingrs = getIngredients()
     log = getLog()
     for i in range(len(quantitiesLeft)):
         for drink in log:
             quantitiesLeft[i] -= int(drink[i])
-    return render_template('statuschart.html', quantitiesLeft=quantitiesLeft)
-    
-    ## placeholder return:
-    #return str(quantitiesLeft)
+    return render_template('statuschart.html', ingrs=ingrs, quantitiesLeft=quantitiesLeft)
 
 @app.route('/drinkinfo')
 def show_drinks():

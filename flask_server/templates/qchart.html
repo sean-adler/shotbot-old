@@ -1,37 +1,26 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <!--Load the AJAX API-->
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>
+      ShotBot: Quantity Drunk by Ingredient
+    </title>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
     
-      // Load the Visualization API and the piechart package.
-      google.load('visualization', '1.0', {'packages':['corechart']});
+    google.load('visualization', '1.0', {'packages':['corechart']});
 
       // Callback that creates and populates a data table, 
-      // instantiates the pie chart, passes in the data and
+      // instantiates the chart, passes in the data and
       // draws it.
     function drawChart() {
 
-      // Create data model by importing array from quantity_chart() function.
-      var drinkTotals = {{ drinkTotals }};
+      // Import data from Flask.
+      // Removes JS escaping with the |safe tag.
+      var qChartList = {{ qChartList|safe }};
 
-      // Create the data table.
-      var data = new google.visualization.DataTable();
-      data.addColumn('string', 'Drink');
-      data.addColumn('number', 'Seconds Poured');
-      data.addRows([
-        ['Whiskey', drinkTotals[0]],
-        ['Tequila', drinkTotals[1]],
-        ['Vodka', drinkTotals[2]], 
-        ['Blue Curacao', drinkTotals[3]],
-        ['Orange Juice', drinkTotals[4]],
-        ['Pineapple Juice', drinkTotals[5]],
-        ['Cranberry Juice', drinkTotals[6]],
-        ['Sour Mix', drinkTotals[7]]
-      ]);
+      var data = google.visualization.arrayToDataTable(qChartList);
 
-      // Set chart options.
       var options = {'title':'Quantity Drunk by Ingredient',
                      'width':1200,
                      'height':800};
