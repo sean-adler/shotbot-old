@@ -32,13 +32,13 @@
       ]);
 
       // Set chart options.
-      var options = {'title':'Drank',
+      var options = {'title':'Quantity Drunk by Ingredient',
                      'width':800,
                      'height':600};
 
       // Instantiate and draw the chart.
       var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-      
+
       chart.draw(data, options);
 
     }

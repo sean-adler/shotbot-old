@@ -11,30 +11,30 @@
     </script>
     <script type="text/javascript">
 
-    function drawVisualization() {
+    function drawChart() {
       // Create and populate the data table.
-      var counts = {{counts}};
+      var counts = {{ counts }};
       // Format counts for bar chart.
       counts.splice(0,0,'');
-      //alert(counts);
-        var data = google.visualization.arrayToDataTable([
-          ['', 'Whiskey Sour', 'Tequila Sunrise', 'Cosmopolitan', 'Custom Drinks', 'Green Widow', 'Green Monster', 'Bay Breeze', 'Screwdriver', 'Margarita'],
+
+      var data = google.visualization.arrayToDataTable([
+        ['', 'Whiskey Sour', 'Tequila Sunrise', 'Cosmopolitan', 'Custom Drinks', 'Green Widow', 'Green Monster', 'Bay Breeze', 'Screwdriver', 'Margarita'],
           counts
         ]);
 
-        // Set chart options.
-        var options = {title:"Drink Count by Type",
+      // Set chart options.
+      var options = {title:"Drink Count by Type",
                   width:900, height:600};
 
-        // Instantiate and draw the chart.
-        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+      // Instantiate and draw the chart.
+      var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
 
-        chart.draw(data, options);
+      chart.draw(data, options);
       
-      }
+    }
 
-      // Set a callback to run when the Google Visualization API is loaded.
-      google.setOnLoadCallback(drawVisualization);
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.setOnLoadCallback(drawChart);
 
     </script>
   </head>

@@ -122,20 +122,9 @@ def drink_chart():
             for drink in drinkInfo:
                 if ingrs == drinkInfo[drink]['ingredients']:
                     drinkInfo[drink]['count'] += 1
-                    #drinkCountDict[drink] += 1
-    # Convert count to list and send to JavaScript.
-    #names = [drink for drink in drinkInfo]
-    #names = ''
-    #for drink in drinks:
-    #    names += drink
+    # Create counts list and send it to JS.
     counts = [drinkInfo[drink]['count'] for drink in drinkInfo]
-    # Format lists for JavaScript.
-    #names.insert(0, '')
-    #counts.insert(0, '')
-    #drinkCountList = [drinkCountDict[drink] for drink in drinkCountDict]
-    #listForJS = [names, counts]
     return render_template('dchart.html', counts=counts)
-    #return str(listForJS)
     
 @app.route('/status')
 def show_status():
@@ -156,7 +145,7 @@ def show_status():
     ## placeholder return:
     return str(quantitiesLeft)
 
-@app.route('/drinklist')
+@app.route('/drinkinfo')
 def show_drinks():
     return str(getDrinkInfo())
 
