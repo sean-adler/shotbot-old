@@ -126,13 +126,13 @@ def drink_chart():
     counts = [drinkInfo[drink]['count'] for drink in drinkInfo]
     return render_template('dchart.html', counts=counts)
     
-@app.route('/status')
+@app.route('/statuschart')
 def show_status():
     """
     Draws a bar chart showing your remaining ingredient quantities.
     """
     ## need calibration here: Not all ingredients pour at equal speeds.
-    ## also: 100 is an arbitrary placeholder, need to estimate this.
+    ## also: 100 is an arbitrary placeholder.
     quantitiesLeft = [100,100,100,100,100,100,100,100]
 
     # read log file
@@ -140,10 +140,10 @@ def show_status():
     for i in range(len(quantitiesLeft)):
         for drink in log:
             quantitiesLeft[i] -= int(drink[i])
-    #render_template('status.html', quantitiesLeft=quantitiesLeft)
+    return render_template('statuschart.html', quantitiesLeft=quantitiesLeft)
     
     ## placeholder return:
-    return str(quantitiesLeft)
+    #return str(quantitiesLeft)
 
 @app.route('/drinkinfo')
 def show_drinks():

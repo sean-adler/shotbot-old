@@ -13,17 +13,17 @@
 
     function drawChart() {
       // Create and populate the data table.
-      var counts = {{ counts }};
+      var quantitiesLeft = {{ quantitiesLeft }};
       // Format counts for bar chart.
-      counts.splice(0,0,'');
+      quantitiesLeft.splice(0,0,'');
 
       var data = google.visualization.arrayToDataTable([
-        ['', 'Whiskey Sour', 'Tequila Sunrise', 'Cosmopolitan', 'Custom Drinks', 'Green Widow', 'Green Monster', 'Bay Breeze', 'Screwdriver', 'Margarita'],
-          counts
+        ['', 'Whiskey', 'Tequila', 'Vodka', 'Blue Curacao', 'Orange Juice', 'Pineapple Juice', 'Cranberry Juice', 'Sour Mix'],
+          quantitiesLeft
         ]);
 
       // Set chart options.
-      var options = {title:"Drink Count by Type",
+      var options = {title:"Quantity Remaining by Ingredient",
                   width:1200, height:800};
 
       // Instantiate and draw the chart.
