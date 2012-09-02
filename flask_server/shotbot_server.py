@@ -1,9 +1,7 @@
 from arduino import Arduino
 from flask import Flask, render_template
-import time
 from utils import *
-import os
-import json
+import time
 import threading
 
 ###########################
@@ -53,14 +51,9 @@ app = Flask(__name__)
     ##return ''
 
 @app.route('/pour/<ingredients>')
-def log_and_prep_request(ingredients):
-    logPath = getLogPath()
-    with open(logPath, 'a') as log:
-        log.write(ingredients)
-        log.write("\n")
-        
-    L = [int(i) for i in ingredients]
-    pour_all(L)
+def prepare_request(ingredients):
+    ing_list = [int(i) for i in ingredients]
+    pour_all(ing_list)
     return '%s now pouring.' % ingredients
 
 def pour_valve(valve, duration):
@@ -80,13 +73,15 @@ def pour_all(ingredients):
         print 'Still pouring something.\nWait your turn yo!!!'
         return
     else:
+        log_request(ingredients)
         for i in range(len(ingredients)):
             if ingredients[i] > 0:
                 thread = threading.Thread(target=pour_valve,
                                           args=(i, ingredients[i]))
                 thread.start()
                 time.sleep(0.1)
-        return 'MAIN FUNCTION ENDING...'
+        print 'MAIN FUNCTION ENDING...'
+        return
 
 def shotbot_is_pouring():
     return any(pouring.values())

@@ -9,6 +9,16 @@ def getLogPath():
 
     return log_file
 
+def log_request(ingredient_list):
+    """
+    Write the request to the log.txt file as a string.
+    """
+    logPath = getLogPath()
+    ingredient_string = "".join([str(i) for i in ingredient_list])
+    with open(logPath, 'a') as log:
+        log.write(ingredient_string)
+        log.write("\n")
+
 def getLog():
     """
     Reads the log.txt file and removes newlines.
