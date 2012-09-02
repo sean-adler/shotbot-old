@@ -5,8 +5,7 @@ def getLogPath():
     Outputs the path of the log.txt file.
     """
     pwd = os.path.dirname(os.path.abspath(__file__))
-    static_dir = os.path.join(pwd, 'static')
-    log_file = os.path.join(static_dir, 'log.txt')
+    log_file = os.path.join(pwd, 'log.txt')
 
     return log_file
 

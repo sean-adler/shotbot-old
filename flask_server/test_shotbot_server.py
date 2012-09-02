@@ -1,9 +1,10 @@
 from arduino import Arduino
 from flask import Flask, render_template
-from time import sleep
+import time
 from utils import *
 import os
 import json
+import threading
 
 ###########################
 ###    Arduino setup    ###
@@ -28,9 +29,14 @@ cranberry_juice = 6
 sour_mix = 7
 """
 
-# Declare all output pins
+## Declare all output pins
 
-#uno.output([0,1,2,3,4,5,6,7])
+## uno.output([0,1,2,3,4,5,6,7])
+
+##
+status = {}
+for i in range(8):
+    status[i] = False
 
 ################################
 ###    Flask server setup    ###
@@ -73,7 +79,7 @@ def pour(pinDurations, highPins):
     powering down each when its ingredient is fully poured.
     """
     # Recurse until all ingredients are completely poured.
-    if any(p for p in pinDurations if p > 0):
+    if any(p > 0 for p in pinDurations):
         for p in range(len(pinDurations)):
             if pinDurations[p] > 0 and p not in highPins:
                 highPins.append(p)
@@ -81,7 +87,7 @@ def pour(pinDurations, highPins):
                 print "Writing HIGH to Pin %d" % p
         # Leave pins high until at least one ingredient is completely poured.
         pour_time = min(p for p in pinDurations if p > 0)
-        sleep(pour_time)
+        time.sleep(pour_time)
         # Update durations.
         newDurations = [(p-pour_time) for p in pinDurations]
         # Turn off pins whose ingredients are completely poured.
@@ -93,6 +99,45 @@ def pour(pinDurations, highPins):
         pour(newDurations, highPins)
     else:
         return
+
+@app.route('/threading/<ingredients>')
+def prep_request(ingredients):
+    logPath = getLogPath()
+    with open(logPath, "a") as log:
+        log.write(ingredients)
+        log.write("\n")
+    L = [int(i) for i in ingredients]
+    conc_pour(L)
+    return '%s now pouring.' % ingredients
+
+def pour_valve(valve, duration):
+    print 'Turning valve %d ON.\n' % valve
+    # uno.setHigh(p)
+    status[valve] = True
+    time.sleep(duration)
+    print 'Turning valve %d OFF.\n' % valve
+    # uno.setLow(p)
+    status[valve] = False
+    
+##
+##def write_serial(pin):
+    ##do stuff with serial module
+
+def conc_pour(ingredients):
+    if shotbot_is_pouring():
+        print 'Wait your turn yo!!!'
+        return
+    else:
+        for i in range(len(ingredients)):
+            if ingredients[i] > 0:
+                thread = threading.Thread(target=pour_valve,
+                                          args=(i, ingredients[i]))
+                thread.start()
+                time.sleep(0.1)
+        return 'MAIN FUNCTION ENDING...'
+
+def shotbot_is_pouring():
+    return any(status.values())
 
 @app.route('/qchart')
 def quantity_chart():
