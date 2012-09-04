@@ -11,7 +11,7 @@ def getLogPath():
 
 def log_request(ingredient_list):
     """
-    Write the request to the log.txt file as a string.
+    Convert a list to a string and write it to log.txt.
     """
     logPath = getLogPath()
     ingredient_string = "".join([str(i) for i in ingredient_list])

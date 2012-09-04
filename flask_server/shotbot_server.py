@@ -43,12 +43,10 @@ for i in range(8):
 # Create server
 app = Flask(__name__)
 
-# Called if exception is raised
+## Called if exception is raised
 ##@app.teardown_request
 ##def teardown_request(exception):
     #uno.turnOff()
-    # placeholder return statement.
-    ##return ''
 
 @app.route('/pour/<ingredients>')
 def prepare_request(ingredients):
@@ -69,7 +67,7 @@ def pour_valve(valve, duration):
     ##do stuff with serial module
 
 def pour_all(ingredients):
-    if shotbot_is_pouring():
+    if any(pouring.values()):
         print 'Still pouring something.\nWait your turn yo!!!'
         return
     else:
@@ -82,9 +80,6 @@ def pour_all(ingredients):
                 time.sleep(0.1)
         print 'MAIN FUNCTION ENDING...'
         return
-
-def shotbot_is_pouring():
-    return any(pouring.values())
 
 @app.route('/qchart')
 def quantity_chart():
@@ -123,12 +118,11 @@ def drink_chart():
     counts = [drinkInfo[drink]['count'] for drink in drinkInfo]
     return render_template('dchart.html', drinkNames=drinkNames, counts=counts)
     
-@app.route('/statuschart')
+@app.route('/schart')
 def status_chart():
     """
     Draws a bar chart showing your remaining ingredient quantities.
     """
-    
     ## need calibration here: Not all ingredients pour at equal speeds.
     ## also: 100 is an arbitrary placeholder.
     quantitiesLeft = [100,100,100,100,100,100,100,100]
